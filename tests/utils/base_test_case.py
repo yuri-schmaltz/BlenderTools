@@ -17,6 +17,13 @@ class BaseTestCase(unittest.TestCase):
         if self.test_environment:
             self.test_folder = os.environ.get('CONTAINER_TEST_FOLDER')
             self.repo_folder = os.environ.get('CONTAINER_REPO_FOLDER')
+
+        # Default to the current repository when running tests locally
+        if not self.repo_folder:
+            self.repo_folder = os.getcwd()
+        if not self.test_folder:
+            self.test_folder = os.path.join(self.repo_folder, 'tests')
+
         self.addons_folder = os.path.join(self.repo_folder, 'release')
 
         sys.path.append(self.repo_folder)
